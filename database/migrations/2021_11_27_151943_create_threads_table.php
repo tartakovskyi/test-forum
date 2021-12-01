@@ -17,7 +17,8 @@ class CreateThreadsTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('title');
-            $table->smallInteger('post count')->default(0);
+            $table->smallInteger('post_count')->default(0);
+            $table->integer('last_comment')->nullable();
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });

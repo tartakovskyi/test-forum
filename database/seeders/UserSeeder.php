@@ -17,7 +17,6 @@ class UserSeeder extends Seeder
     public function run()
     {
         
-
         User::create(
             [
                 'login' => 'VVT',
