@@ -21,4 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['namespace' => 'Api'], function () {
 
+    Route::apiResources([
+        'post' => PostController::class,
+        'thread' => ThreadController::class,
+        'user' => UserController::class,
+    ]);
 });

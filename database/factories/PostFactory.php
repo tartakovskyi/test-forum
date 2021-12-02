@@ -14,9 +14,7 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'text' => $this->faker->realText($maxNbChars = 300, $indexSize = 3),
-            'thread_id' => 0,
-            'user_id' => 0
+            'text' => $this->faker->realText($maxNbChars = 300, $indexSize = 3)
         ];
     }
 }
