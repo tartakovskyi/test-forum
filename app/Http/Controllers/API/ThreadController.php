@@ -16,7 +16,7 @@ class ThreadController extends Controller
     public function index()
     {
 
-        return response()->json(Thread::with('user:id,login')->get(), 200);
+        return response()->json(Thread::with('user:id,login')->withCount('posts')->get(), 200);
     }
 
     /**

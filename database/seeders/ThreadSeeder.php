@@ -20,9 +20,7 @@ class ThreadSeeder extends Seeder
 
         Thread::factory()
         ->count(10)
-        ->state(new Sequence(
-            fn ($sequence) => ['user_id' => User::all()->random()],
-        ))
+        ->state(['user_id' => User::all()->random()])
         ->create();
     }
 }

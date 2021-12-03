@@ -22,13 +22,13 @@ class PostSeeder extends Seeder
         $users = User::pluck('id')->all();
 
         foreach ($threads as $threadId) {
-            $count = rand(2, 25);
+            $count = rand(5, 25);
             $lastPost = 0;
+            $parents = [0];
             for ($i=0; $i < $count; $i++) {
-                $parents = [0];
                 $randParent = array_rand($parents);
                 $randUser = array_rand($users);
-                $parents[] = Post::factory()->make([
+                $parents[1] = $parents[2] = Post::factory()->create([
                     'thread_id' => $threadId,
                     'parent_id' => $parents[$randParent],
                     'user_id' => $users[$randUser]
