@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Thread;
+use App\Repositories\PostRepository;
 use Illuminate\Http\Request;
+
 
 class ThreadController extends Controller
 {
@@ -16,7 +18,7 @@ class ThreadController extends Controller
     public function index()
     {
 
-        return response()->json(Thread::with('user:id,login')->withCount('posts')->get(), 200);
+        return response()->json(Thread::with('user:id,login,userpic')->withCount('posts')->get(), 200);
     }
 
     /**
@@ -38,7 +40,11 @@ class ThreadController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $threadInfo = Thread::with('user:id,login,userpic')->find($id);
+        $posts = (new PostRepository())->getTree($id);
+
+        return compact('threadInfo', 'posts');
     }
 
     /**

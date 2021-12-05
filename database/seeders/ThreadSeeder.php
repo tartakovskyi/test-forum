@@ -19,7 +19,7 @@ class ThreadSeeder extends Seeder
     {
 
         Thread::factory()
-        ->count(10)
+        ->count(25)
         ->state(['user_id' => User::all()->random()])
         ->create();
     }
