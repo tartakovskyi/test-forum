@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'phone' => '0686425099',
                 'email_verified_at' => now(),
                 'password' => Hash::make('123456'),
-                'role' => 1,
+                'role_id' => 1,
                 'userpic' => 'volodymyr.jpg'
             ]
         );

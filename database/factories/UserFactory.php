@@ -24,7 +24,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => bcrypt('123456'),
             'remember_token' => Str::random(10),
-            'role' => $this->faker->randomElement($array = [1,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3])
+            'role_id' => $this->faker->randomElement($array = [1,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3])
         ];
     }
 

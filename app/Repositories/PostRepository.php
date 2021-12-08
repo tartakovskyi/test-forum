@@ -15,7 +15,9 @@ class PostRepository
 	public function getTree($threadId)
 	{
 
-		$this->posts = Post::where('thread_id', $threadId)->with('user:id,login')->get()->toArray();
+		$this->posts = Post::where('thread_id', $threadId)->with(['user' => function($query) {
+			$query->with('role');
+		}])->get()->toArray();
 
 		return $this->buildTree();
 	}
