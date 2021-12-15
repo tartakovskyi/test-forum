@@ -22,10 +22,10 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => 'Api'], function () {
 
     Route::group(['namespace' => 'Auth'], function () {
-        /*Route::post('register', 'RegisterController');
+        Route::post('register', 'RegisterController');
         Route::post('login', 'LoginController');
-        Route::post('logout', 'LogoutController')->middleware('auth:sanctum');*/
-        Route::middleware('auth:sanctum')->get('/get-auth', function (Request $request) {
+        Route::post('logout', 'LogoutController')->middleware('auth:api');
+        Route::middleware('auth:api')->get('/get-auth', function (Request $request) {
             return $request->user();
         });
     });
