@@ -9,6 +9,17 @@ class Post extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'thread_id',
+        'user_id',
+        'parent_id',
+        'text'
+    ];
 
     public function user()
     {

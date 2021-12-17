@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -25,7 +26,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $newPost = Post::create($request->all());
+
+        if ($newPost) {
+            return response()->json(['info' => 'Message successfully created!'], 200);
+        }
     }
 
     /**
