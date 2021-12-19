@@ -12,14 +12,22 @@ class PostRepository
 	private $tree = [];
 
 	
-	public function getTree($threadId)
+	public function getTree($threadId, $limit = 10)
 	{
 
 		$this->posts = Post::where('thread_id', $threadId)->with(['user' => function($query) {
 			$query->with('role');
 		}])->get()->toArray();
 
-		return $this->buildTree();
+		$tree = $this->buildTree();
+		usort($tree, function($a, $b) {
+			if ($a['created_at'] == $b['created_at']) {
+				return 0;
+			}
+			return ($a['created_at'] > $b['created_at']) ? -1 : 1;
+		});
+
+		return array_slice($tree, 0, $limit);
 	}
 
 
