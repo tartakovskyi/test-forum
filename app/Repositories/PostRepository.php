@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Illuminate\Http\Request;
 use App\Models\Post;
 
 
@@ -47,7 +48,26 @@ class PostRepository
 		return $branch;
 	}
 
+
+	public function store(Request $request)
+    {
+
+    	$validated = $request->validate([
+            'text' => 'string|required',
+            'thread_id' => 'numeric|required',
+            'user_id' => 'numeric|exists:App\Models\User,id|required'
+        ]);
+
+        dd($validated);
+        
+        $newPost = Post::create($request->all());
+
+
+    }
+
 }
+
+
 
 
 ?>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Repositories\PostRepository;
+
 
 class PostController extends Controller
 {
@@ -27,7 +29,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         
-        $newPost = Post::create($request->all());
+        $newPost = (new PostRepository())->store($request);
 
         if ($newPost) {
             return response()->json(['info' => 'Message successfully created!'], 200);
