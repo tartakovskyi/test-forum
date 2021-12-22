@@ -19,9 +19,13 @@ class RegisterController extends Controller
             'password' => 'required'
         ]);
 
+        if ($request->userpic && Storage::exists($request->userpic))
+        {
+            Storage::move('app/tmp/'.$request->userpic, 'app/userpic/'.$request->userpic);
+        }
 
         $user = User::create(array_merge(
-            $request->only('login', 'email', 'phone', 'first_name', 'last_name'),
+            $request->only('login', 'email', 'phone', 'first_name', 'last_name', 'userpic'),
             [
                 'password' => bcrypt($request->password),
                 'role_id' => 3
