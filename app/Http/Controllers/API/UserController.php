@@ -63,4 +63,19 @@ class UserController extends Controller
     {
         //
     }
+
+
+
+    public function userpic(Request $request)
+    {
+        $request->validate([
+            'userpic' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:256',
+        ]);
+    
+        $imageName = time().'.'.$request->userpic->extension();  
+     
+        $request->userpic->move(storage_path('app/tmp'), $imageName);
+
+        return response()->json(['status' => 'success', 'file_name' => $imageName], 200);
+    }
 }
