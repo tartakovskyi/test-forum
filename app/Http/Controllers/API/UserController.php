@@ -74,7 +74,7 @@ class UserController extends Controller
     
         $imageName = time().'.'.$request->userpic->extension();  
      
-        $request->userpic->move(storage_path('app/tmp'), $imageName);
+        $request->userpic->move(storage_path('app/public/tmp'), $imageName);
 
         return response()->json(['status' => 'success', 'file_name' => $imageName], 200);
     }
