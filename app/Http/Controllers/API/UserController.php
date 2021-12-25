@@ -69,7 +69,7 @@ class UserController extends Controller
     public function userpic(Request $request)
     {
         $request->validate([
-            'userpic' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:256',
+            'userpic' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:128',
         ]);
     
         $imageName = time().'.'.$request->userpic->extension();  
