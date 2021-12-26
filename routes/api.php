@@ -30,12 +30,9 @@ Route::group(['namespace' => 'Api'], function () {
         });
     });
 
+    Route::middleware('auth:api')->post('/post', [PostController::class, 'store']);
+
     Route::post('user/userpic', [App\Http\Controllers\Api\UserController::class, 'userpic']);
-    /*Route::post('user/userpic', function (Request $request) {
-        return json_decode('test');
-            //echo $request->image->extension();
-            //return $request->image->extension();
-        });*/
 
     Route::apiResources([
         'post' => PostController::class,
