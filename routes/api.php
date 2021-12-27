@@ -1,7 +1,13 @@
 <?php
 
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length');
+header('Access-Control-Allow-Origin: *');
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +36,7 @@ Route::group(['namespace' => 'Api'], function () {
         });
     });
 
-    Route::middleware('auth:api')->post('/post', [PostController::class, 'store']);
+    //Route::middleware('auth:api')->post('/post', [PostController::class, 'store']);
 
     Route::post('user/userpic', [App\Http\Controllers\Api\UserController::class, 'userpic']);
 

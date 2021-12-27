@@ -58,11 +58,8 @@ class PostRepository
             'user_id' => 'numeric|exists:App\Models\User,id|required'
         ]);
 
-        dd($validated);
         
-        $newPost = Post::create($request->all());
-
-
+        return Post::create($request->all());
     }
 
 }

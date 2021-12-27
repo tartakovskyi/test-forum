@@ -6,10 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Repositories\PostRepository;
+use Fruitcake\Cors\CorsServiceProvider;
 
 
 class PostController extends Controller
 {
+
+    /*public function __construct()
+    {
+        $this->middleware(['cors', 'auth:api'])->only('store');
+    }*/
+
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +35,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        
+  
         $newPost = (new PostRepository())->store($request);
 
         if ($newPost) {
