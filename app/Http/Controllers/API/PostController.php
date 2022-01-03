@@ -12,10 +12,10 @@ use Fruitcake\Cors\CorsServiceProvider;
 class PostController extends Controller
 {
 
-    /*public function __construct()
+    public function __construct()
     {
-        $this->middleware(['cors', 'auth:api'])->only('store');
-    }*/
+        $this->middleware('auth:api', ['only' => ['store']]);
+    }
 
     /**
      * Display a listing of the resource.

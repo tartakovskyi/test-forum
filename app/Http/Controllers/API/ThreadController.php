@@ -38,11 +38,13 @@ class ThreadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
 
         $threadInfo = Thread::with('user:id,login,userpic')->find($id);
-        $posts = (new PostRepository())->getTree($id);
+        $postRepository = new PostRepository();
+        $threadInfo['count'] = $postRepository->getCount($id);
+        $posts = $postRepository->getTree($id, $request->limit);
 
         return compact('threadInfo', 'posts');
     }

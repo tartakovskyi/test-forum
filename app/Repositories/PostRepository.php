@@ -12,6 +12,13 @@ class PostRepository
 	private $posts;
 	private $tree = [];
 
+
+	public function getCount($threadId)
+	{
+
+		return Post::where('thread_id', $threadId)->where('parent_id', 0)->count();
+	}
+
 	
 	public function getTree($threadId, $limit = 10)
 	{
@@ -32,7 +39,8 @@ class PostRepository
 	}
 
 
-	private function buildTree($parentId = 0) {
+	private function buildTree($parentId = 0)
+	{
 		$branch = [];
 
 		foreach ($this->posts as $post) {

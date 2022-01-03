@@ -36,8 +36,6 @@ Route::group(['namespace' => 'Api'], function () {
         });
     });
 
-    //Route::middleware('auth:api')->post('/post', [PostController::class, 'store']);
-
     Route::post('user/userpic', [App\Http\Controllers\Api\UserController::class, 'userpic']);
 
     Route::apiResources([
