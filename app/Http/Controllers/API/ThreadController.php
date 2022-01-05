@@ -5,20 +5,27 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Thread;
 use App\Repositories\PostRepository;
+use App\Repositories\ThreadRepository;
 use Illuminate\Http\Request;
 
 
 class ThreadController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['only' => ['store']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        return response()->json(Thread::with('user:id,login,userpic')->withCount('posts')->get(), 200);
+        return (new ThreadRepository())->getThreads($request->limit);
     }
 
     /**
@@ -29,7 +36,12 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $newThread = (new ThreadRepository())->store($request);
+
+        if ($newThread) {
+            return response()->json(['info' => 'Thread successfully created!'], 200);
+        }
     }
 
     /**
