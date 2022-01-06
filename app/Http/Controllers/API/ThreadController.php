@@ -14,7 +14,7 @@ class ThreadController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['only' => ['store']]);
+        $this->middleware('auth:api', ['only' => ['destroy', 'store', 'update']]);
     }
 
     /**
@@ -70,7 +70,16 @@ class ThreadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        if ($thread = Thread::find($id)) {
+            $update = (new ThreadRepository())->update($request, $thread);
+
+            if ($update) {
+                return response()->json(['info' => 'Thread successfully updated!'], 200);
+            } 
+        } else {
+            return response()->withError('Thread not found');
+        }        
     }
 
     /**
