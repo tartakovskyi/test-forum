@@ -40,7 +40,7 @@ class ThreadController extends Controller
         $newThread = (new ThreadRepository())->store($request);
 
         if ($newThread) {
-            return response()->json(['info' => 'Thread successfully created!'], 200);
+            return response()->json(['status' => 'success', 'info' => 'Thread successfully created!'], 200);
         }
     }
 
@@ -75,7 +75,7 @@ class ThreadController extends Controller
             $update = (new ThreadRepository())->update($request, $thread);
 
             if ($update) {
-                return response()->json(['info' => 'Thread successfully updated!'], 200);
+                return response()->json(['status' => 'success', 'info' => 'Thread successfully updated!'], 200);
             } 
         } else {
             return response()->withError('Thread not found');
@@ -90,6 +90,8 @@ class ThreadController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (Thread::destroy($id)) {
+            return response()->json(['status' => 'success', 'info' => 'Thread successfully deleted!'], 200);
+        }
     }
 }
