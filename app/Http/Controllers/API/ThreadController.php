@@ -7,6 +7,7 @@ use App\Models\Thread;
 use App\Repositories\PostRepository;
 use App\Repositories\ThreadRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 
 class ThreadController extends Controller
@@ -72,13 +73,16 @@ class ThreadController extends Controller
     {
 
         if ($thread = Thread::find($id)) {
-            $update = (new ThreadRepository())->update($request, $thread);
-
-            if ($update) {
-                return response()->json(['status' => 'success', 'info' => 'Thread successfully updated!'], 200);
+            if (Gate::allows('creator-or-admin', $thread)) {
+                $update = (new ThreadRepository())->update($request, $thread);
+                if ($update) {
+                    return response()->json(['status' => 'success', 'info' => 'Thread successfully updated!'], 200);
+                }
+            } else {
+                return response()->json(['errors' => ['auth' => ['Only the creator or admin can edit the thread information']]], 403);
             } 
         } else {
-            return response()->withError('Thread not found');
+            return response()->json(['errors' => ['thread' => ['Thread not found']]], 404);
         }        
     }
 
@@ -90,8 +94,17 @@ class ThreadController extends Controller
      */
     public function destroy($id)
     {
-        if (Thread::destroy($id)) {
-            return response()->json(['status' => 'success', 'info' => 'Thread successfully deleted!'], 200);
+
+        if ($thread = Thread::find($id)) {
+            if (Gate::allows('creator-or-admin', $thread)) {
+                if (Thread::destroy($id)) {
+                    return response()->json(['status' => 'success', 'info' => 'Thread successfully deleted!'], 200);
+                }
+            } else {
+                return response()->json(['errors' => ['auth' => ['Only the creator or admin can delete the thread']]], 403);
+            } 
+        } else {
+            return response()->json(['errors' => ['thread' => ['Thread not found']]], 404);
         }
     }
 }

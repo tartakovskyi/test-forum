@@ -30,7 +30,7 @@ class ThreadRepository
 
     public function update(Request $request, $thread)
     {
-
+        
         $validated = $request->validate([
             'title' => 'string|required'
         ]);

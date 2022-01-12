@@ -29,6 +29,10 @@ class AuthServiceProvider extends ServiceProvider
             Passport::routes();
         }
 
+        Gate::define('creator-or-admin', function ($user, $entity) {
+            return $user->id === $entity->user_id || $user->role_id === 1;
+        });
+
         $this->registerPolicies();
     }
 }
