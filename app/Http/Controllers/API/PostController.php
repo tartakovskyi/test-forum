@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use Fruitcake\Cors\CorsServiceProvider;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
-use Illuminate\Http\Request;
 use App\Repositories\PostRepository;
-use Fruitcake\Cors\CorsServiceProvider;
 
 
 class PostController extends Controller
@@ -39,7 +40,7 @@ class PostController extends Controller
         $newPost = (new PostRepository())->store($request);
 
         if ($newPost) {
-            return response()->json(['info' => 'Message successfully created!'], 200);
+            return response()->json(['info' => 'Comment successfully created!'], 200);
         }
     }
 
@@ -63,7 +64,19 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        if ($post = Post::find($id)) {
+            if (Gate::allows('creator-or-admin', $post)) {
+                $update = (new PostRepository())->update($request, $post);
+                if ($update) {
+                    return response()->json(['status' => 'success', 'info' => 'Post successfully updated!'], 200);
+                }
+            } else {
+                return response()->json(['errors' => ['auth' => ['Only the creator or admin can edit the comment information']]], 403);
+            } 
+        } else {
+            return response()->json(['errors' => ['post' => ['comment not found']]], 404);
+        }
     }
 
     /**

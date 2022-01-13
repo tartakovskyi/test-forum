@@ -61,6 +61,7 @@ class PostRepository
     {
 
     	$validated = $request->validate([
+    		'parent_id' => 'numeric',
             'text' => 'string|required',
             'thread_id' => 'numeric|required',
             'user_id' => 'numeric|exists:App\Models\User,id|required'
@@ -68,6 +69,22 @@ class PostRepository
 
         
         return Post::create($request->all());
+    }
+
+    public function update(Request $request, $thread)
+    {
+        
+        $validated = $request->validate([
+        	'parent_id' => 'numeric',
+            'text' => 'string|required',
+            'thread_id' => 'numeric|required',
+            'user_id' => 'numeric|exists:App\Models\User,id|required'
+        ]);
+
+        
+        return $thread->update([
+            'text' => $request->text
+        ]);
     }
 
 }
