@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
+use App\Models\Post;
 
 
 class AuthServiceProvider extends ServiceProvider
@@ -31,6 +32,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('creator-or-admin', function ($user, $entity) {
             return $user->id === $entity->user_id || $user->role_id === 1;
+        });
+
+        Gate::define('no-replies', function ($user, $postId) {
+            return (!Post::where('parent_id', $postId)->count() || $user->role_id === 1);
         });
 
         $this->registerPolicies();

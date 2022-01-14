@@ -15,7 +15,7 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['only' => ['store']]);
+        $this->middleware('auth:api', ['only' => ['destroy', 'store', 'update']]);
     }
 
     /**
@@ -66,14 +66,16 @@ class PostController extends Controller
     {
 
         if ($post = Post::find($id)) {
-            if (Gate::allows('creator-or-admin', $post)) {
+            if (!Gate::allows('creator-or-admin', $post)) {
+                return response()->json(['errors' => ['auth' => ['Only the creator or admin can edit the comment information']]], 403);
+            } elseif(!Gate::allows('no-replies', $post->id)) {
+                return response()->json(['errors' => ['auth' => ['You can not edit or delete the post wich has replies']]], 403);
+            } else {
                 $update = (new PostRepository())->update($request, $post);
                 if ($update) {
                     return response()->json(['status' => 'success', 'info' => 'Post successfully updated!'], 200);
                 }
-            } else {
-                return response()->json(['errors' => ['auth' => ['Only the creator or admin can edit the comment information']]], 403);
-            } 
+            }
         } else {
             return response()->json(['errors' => ['post' => ['comment not found']]], 404);
         }
@@ -87,6 +89,19 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        if ($post = Post::find($id)) {
+            if (!Gate::allows('creator-or-admin', $post)) {
+                return response()->json(['errors' => ['auth' => ['Only the creator or admin can delete the post']]], 403);
+            } elseif(!Gate::allows('no-replies', $post->id)) {
+                return response()->json(['errors' => ['auth' => ['You can not edit or delete the post wich has replies']]], 403);
+            } else {
+                if (Post::destroy($id)) {
+                    return response()->json(['status' => 'success', 'info' => 'Comment successfully deleted!'], 200);
+                }
+            }
+        } else {
+            return response()->json(['errors' => ['post' => ['comment not found']]], 404);
+        }
     }
 }
