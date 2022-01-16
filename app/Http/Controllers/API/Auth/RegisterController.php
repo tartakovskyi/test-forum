@@ -19,10 +19,10 @@ class RegisterController extends Controller
             'phone' => 'required|numeric|unique:users',
             'password' => 'required'
         ]);
-
-        if ($request->userpic && Storage::exists($request->userpic))
+        
+        if ($request->userpic && Storage::exists('public/tmp/'.$request->userpic))
         {
-            Storage::move('app/tmp/'.$request->userpic, 'app/userpic/'.$request->userpic);
+            Storage::move('public/tmp/'.$request->userpic, 'public/userpic/'.$request->userpic);
         }
 
         $user = User::create(array_merge(
