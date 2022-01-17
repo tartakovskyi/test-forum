@@ -6314,7 +6314,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function Userpic(_ref) {
   var user = _ref.user;
-  var img = user.userpic ? user.userpic : '/img/user.svg';
+  var img = user.userpic ? "/storage/userpic/".concat(user.userpic) : '/img/user.svg';
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     to: "/user/" + user.id,
     className: "author-avatar",
