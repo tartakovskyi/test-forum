@@ -6950,18 +6950,20 @@ function Post(_ref) {
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: "forum-post-reply",
-        children: [auth && (auth.id === post.user.id || auth.role_id == 1) && !post.children && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-          className: "link",
-          onClick: function onClick() {
-            return destroy(post.id);
-          },
-          children: "Delete"
-        }), auth && (auth.id === post.user.id || auth.role_id == 1) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
-          className: "link",
-          onClick: function onClick() {
-            return editPost(post, parent);
-          },
-          children: "Edit"
+        children: [auth && (auth.id === post.user.id && !post.children || auth.role_id == 1) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+            className: "link",
+            onClick: function onClick() {
+              return destroy(post.id);
+            },
+            children: "Delete"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+            className: "link",
+            onClick: function onClick() {
+              return editPost(post, parent);
+            },
+            children: "Edit"
+          })]
         }), auth && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
           className: "link",
           onClick: function onClick() {

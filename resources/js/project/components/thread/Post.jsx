@@ -48,8 +48,12 @@ function Post({ auth, post, parent, counter, editPost, level, scrollToParent }) 
           </div>
         </div> 
         <div className="forum-post-reply" >
-          {auth && (auth.id === post.user.id || auth.role_id == 1) && !post.children && <span className="link" onClick={() => destroy(post.id)}>Delete</span>}
-          {auth && (auth.id === post.user.id || auth.role_id == 1) && <span className="link" onClick={() => editPost(post, parent)}>Edit</span>} 
+          {(auth && ((auth.id === post.user.id && !post.children) || auth.role_id == 1)) &&
+            <>
+              <span className="link" onClick={() => destroy(post.id)}>Delete</span>
+              <span className="link" onClick={() => editPost(post, parent)}>Edit</span>
+            </>
+          } 
           {auth && <span className="link" onClick={() => editPost(null, post)}>Reply</span>}          
         </div>   
       </div>
