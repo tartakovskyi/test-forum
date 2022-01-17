@@ -19,15 +19,15 @@ class UserSeeder extends Seeder
         
         User::create(
             [
-                'login' => 'VVT',
-                'first_name' => 'Volodymyr',
-                'last_name' => 'Tartakovskyi',
-                'email' => 'km170682tvv@gmail.com',
-                'phone' => '0686425099',
+                'login' => 'admin',
+                'first_name' => 'John',
+                'last_name' => 'Doe',
+                'email' => 'test@test.com',
+                'phone' => '0681234567',
                 'email_verified_at' => now(),
                 'password' => Hash::make('123456'),
                 'role_id' => 1,
-                'userpic' => 'volodymyr.jpg'
+                'userpic' => 'admin.jpg'
             ]
         );
 
